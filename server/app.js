@@ -6,15 +6,25 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
+import cors from 'cors'
 
 //defaults
 const app = express();
 const GRAPHQL_PORT = 8080;
+const ORIGIN = 'http://localhost:3000'
 
 // combine imported Schema and Resolvers
 const executableSchema = makeExecutableSchema({
   typeDefs: Schema,
   resolvers: Resolvers
+});
+
+app.use('*', cors({ origin: `${ORIGIN}`}));
+app.use(cors({allowedHeaders: 'Access-Control-Allow-Origin, Origin, Accept,Content-Type,X-Requested-With,x-api-key,Referer, Origin,User-Agent, Authorization'}));
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', `${ORIGIN}`);
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin, Origin, Accept,Content-Type,X-Requested-With,x-api-key,Referer, Origin,User-Agent, Authorization');
+  next();
 });
 
 // set new Schema to the /graphql endpoint
