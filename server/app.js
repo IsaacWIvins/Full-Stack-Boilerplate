@@ -33,11 +33,9 @@ models.sequelize.sync()
     const appServer = createServer(app);
     appServer.listen(GRAPHQL_PORT, () => {
       console.log(`GraphQL Server is now running on ${GRAPHQL_PORT}`)
-
       app.use('/graphiql', graphiqlExpress({
         endpointURL: `/graphql`,
       }));
-
     });
   })
   .catch(function (e) {
