@@ -1,27 +1,20 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom"
 import { Query } from "react-apollo";
 import logo from './logo.svg';
 import { GET_USER_INFO } from './graphql/queries.js';
 import './App.css';
 
+import MainRoutes from './navigation/index.js';
+
 class App extends Component {
+
+  componentDidMount() {
+    console.log('App --> CDM')
+    console.log('this.props: ', this.props)
+  }
   render() {
-    return (
-      <Query query={GET_USER_INFO} variables={{ id: 1 }}>
-        {({loading, data, error }) => {
-          if (loading) return <h1>loading</h1>
-          if (error) return <h1>error</h1>
-          console.log('data: ', data)
-          return (
-            <div className="App">
-              <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-              </header>
-            </div>
-          )
-        }}
-      </Query>
-    );
+    return <MainRoutes />
   }
 }
 
